@@ -1,8 +1,12 @@
 package com.my.myapplication;
 
 import android.app.Activity;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -22,12 +26,18 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.scale);
+        setContentView(R.layout.frame);
 
         mImage = (ImageView) findViewById(R.id.image);
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.scale);
+        startAnimation();
+        /* Frame Animation */
+        /*mImage.setBackgroundResource(R.anim.frame);
+        AnimationDrawable anim = (AnimationDrawable) mImage.getBackground();
+        anim.start();*/
+        /* Tween Animation */
+        /*Animation animation = AnimationUtils.loadAnimation(this, R.anim.scale);
         animation.setFillAfter(true);
-        mImage.startAnimation(animation);
+        mImage.startAnimation(animation);*/
     }
 
     public void positive(View v) {
@@ -84,6 +94,46 @@ public class MainActivity extends Activity {
         anim.setFillAfter(true);
         BounceInterpolator bounceInterpolator = new BounceInterpolator();
         anim.setInterpolator(bounceInterpolator);
+        mImage.startAnimation(anim);
+    }
+
+    public void stopFrame(View v){
+        AnimationDrawable anim = (AnimationDrawable) mImage.getBackground();
+        if (anim.isRunning())
+            anim.stop();
+    }
+
+    public void startFrame(View v){
+        /*mImage.setBackgroundResource(R.anim.frame);
+        AnimationDrawable anim = (AnimationDrawable) mImage.getBackground();
+        anim.start();*/
+        AnimationDrawable anim = new AnimationDrawable();
+        for (int i = 0; i < 9; i++) {
+            int id = getResources().getIdentifier("vivo_progress_0" + i, "mipmap", getPackageName());
+            Drawable drawable = getResources().getDrawable(id, null);
+            anim.addFrame(drawable, 30);
+        }
+        for (int i = 10; i < 44; i++) {
+            int id = getResources().getIdentifier("vivo_progress_" + i, "mipmap", getPackageName());
+            Drawable drawable = getResources().getDrawable(id, null);
+            anim.addFrame(drawable, 30);
+        }
+        anim.setOneShot(false);
+        mImage.setBackground(anim);
+        anim.start();
+    }
+
+    private void startAnimation() {
+//        ImageView imageView = new ImageView(this);
+        mImage.setImageResource(R.mipmap.virus_scan_img);
+        /*ViewGroup.LayoutParams layoutParams = mImage.getLayoutParams();
+        layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        mImage.setLayoutParams(layoutParams);*/
+        Animation anim = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        anim.setInterpolator(new LinearInterpolator());
+        anim.setRepeatCount(Animation.INFINITE);
+        anim.setDuration(2000);
         mImage.startAnimation(anim);
     }
 }
