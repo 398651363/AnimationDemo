@@ -2,5 +2,7 @@
     <string name="app_name">My Application</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Settings to&#160;to</string>
+    <string name= "test_string1"><Data><![CDATA[<font color="#ff5a00">你好吗？</font>]]></Data>我很好呀！</string>
+    <string name= "test_string2"><Data><![CDATA[<font color="#ff5a00">你好吗？你好吗？你好吗？</font>]]></Data>\n\n\n我很好呀！</string>
 </resources>
